@@ -1,0 +1,29 @@
+ ☐ Techonologies Used : 
+   - Laravel
+   - ADR Design Pattern.
+   - Nuxtjs
+   - Unit Testing.
+   - JWT
+ ☐ Apis Used : 
+   - Mailtrap
+   - Telestream
+   - AWS
+ ☐ Project Description : 
+ -  API Authentication
+   ✔ Login @done (18-09-13 02:09)
+   ✔ Register @done (18-09-13 02:09)
+   ✔ Reset Password @done (18-09-13 02:09)
+   - Activation Process.
+- Channel
+
+- Videos.
+  - Check if Video is private
+    - If user is owning this one, show it
+  - Check if video is processing, and can be accessed by current user , then show a message or so.
+    - if only processing, this video is processing
+    - if not accessible, this video is private.
+
+art queue:work database --sleep=60 --tries=3 --daemon --timeout=5
+
+Side-Notes : 
+  - Check for currentVideo state while surfing the site.
