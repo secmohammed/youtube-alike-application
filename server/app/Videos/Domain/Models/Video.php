@@ -58,7 +58,6 @@ class Video extends Model {
 		if (!$user && auth()->check()) {
 			$user = auth()->user();
 		}
-		dd($user);
 		if (!$user && $this->isPrivate()) {
 			return false;
 		}
