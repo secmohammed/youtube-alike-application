@@ -6,8 +6,12 @@ Technologies Used :
 - Telestream
 - AWS
 - ADR Design Pattern Instead of MVC
+
 The application is still in progress and under-development
+
 It still needs 
+
+
 - Comments, Replies
 - Subscription
 - Indexing Playlists
