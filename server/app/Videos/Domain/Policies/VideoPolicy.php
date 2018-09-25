@@ -15,7 +15,7 @@ class VideoPolicy {
 	public function destroy(User $user, Video $video) {
 		return $user->id == $video->channel->user_id;
 	}
-	public function access(User $user, Video $video) {
+	public function access( ? User $user, Video $video) {
 		return $video->canBeAccessed($user);
 	}
 }

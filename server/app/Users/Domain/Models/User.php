@@ -44,7 +44,4 @@ class User extends Authenticatable implements CanResetPasswordContract, JWTSubje
 	public function getJWTCustomClaims() {
 		return [];
 	}
-	public function getAuthIdentifierName() {
-		return $this->username;
-	}
 }

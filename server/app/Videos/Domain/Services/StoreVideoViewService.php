@@ -8,7 +8,7 @@ use App\App\Domain\Services\Service;
 
 class StoreVideoViewService extends Service {
 	public function handle($request = null, $video = null) {
-		if (!$video->canBeAccessed($this->user())) {
+		if (!$video->canBeAccessed()) {
 			return new UnauthorizedPayload;
 		}
 		$video->views()->create([

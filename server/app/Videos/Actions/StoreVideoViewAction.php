@@ -11,6 +11,7 @@ class StoreVideoViewAction {
 	public function __construct(StoreVideoViewResponder $responder, StoreVideoViewService $services) {
 		$this->responder = $responder;
 		$this->services = $services;
+		\JWTAuth::parseToken()->authenticate();
 	}
 	public function __invoke(Request $request, Video $video) {
 		return $this->responder->withResponse(

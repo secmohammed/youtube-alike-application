@@ -9,3 +9,4 @@ Route::post('/videos/{channel}', App\Videos\Actions\CreateVideoAction::class);
  * dd(request()->all()) // returns null.
  */
 Route::post('/videos/{video}/update', App\Videos\Actions\UpdateVideoAction::class);
+Route::post('/videos/{video}/views', App\Videos\Actions\StoreVideoViewAction::class);
