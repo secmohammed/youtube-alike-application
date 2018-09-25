@@ -7,7 +7,7 @@ Route::middleware('guest:api')
 /**
  * Authenticated Area.
  */
-Route::middleware('jwt.auth')
+Route::middleware('auth:api')
 	->group(base_path('routes/api/auth.php'));
 /**
  * Public Area is registered at RouteServiceProvider.

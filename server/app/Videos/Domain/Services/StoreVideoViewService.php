@@ -2,17 +2,18 @@
 
 namespace App\Videos\Domain\Services;
 
-use App\App\Domain\Contracts\ServiceInterface;
+use App\App\Domain\Payloads\GenericPayload;
 use App\App\Domain\Payloads\UnauthorizedPayload;
+use App\App\Domain\Services\Service;
 
-class StoreVideoViewService implements ServiceInterface {
+class StoreVideoViewService extends Service {
 	public function handle($request = null, $video = null) {
-		if (!$video->canBeAccessed(auth()->user())) {
+		if (!$video->canBeAccessed($this->user())) {
 			return new UnauthorizedPayload;
 		}
 		$video->views()->create([
 			'user_id' => auth()->check() ? auth()->id() : null,
-			'ip' => $requet->ip(),
+			'ip' => $request->ip(),
 
 		]);
 		return new GenericPayload([

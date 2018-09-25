@@ -7,8 +7,9 @@ use App\Channels\Domain\Models\Channel;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements CanResetPasswordContract {
+class User extends Authenticatable implements CanResetPasswordContract, JWTSubject {
 	use Notifiable, CanResetPassword;
 
 	/**
@@ -42,5 +43,8 @@ class User extends Authenticatable implements CanResetPasswordContract {
 	}
 	public function getJWTCustomClaims() {
 		return [];
+	}
+	public function getAuthIdentifierName() {
+		return $this->username;
 	}
 }

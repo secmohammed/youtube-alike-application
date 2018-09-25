@@ -23,7 +23,6 @@
     - if only processing, this video is processing
     - if not accessible, this video is private.
 
+
 art queue:work database --sleep=60 --tries=3 --daemon --timeout=5
 
-Side-Notes : 
-  - Check for currentVideo state while surfing the site.

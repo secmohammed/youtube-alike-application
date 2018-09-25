@@ -159,7 +159,6 @@ return [
 		// App\App\Providers\BroadcastServiceProvider::class,
 		App\App\Providers\EventServiceProvider::class,
 		App\App\Providers\RouteServiceProvider::class,
-		Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
 		App\App\Providers\EloquentEventServiceProvider::class,
 	],
 
