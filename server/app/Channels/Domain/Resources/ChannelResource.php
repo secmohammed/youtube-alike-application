@@ -39,8 +39,8 @@ class ChannelResource extends JsonResource {
 		return func_num_args() === 3 ? value($default) : new Illuminate\Http\Resources\MissingValue;
 	}
 	protected function conditionallyLoadFilteredVideos() {
-		if (request()->route('video')) {
-			return VideoResource::collection($this->whenLoaded('videos'))->where('uid', '!=', request()->route('video')->uid);
+		if (request()->route('video') && ($collection = VideoResource::collection($this->whenLoaded('videos'))->collection)) {
+			return $collection->where('uid', '!=', request()->route('video')->uid);
 
 		}
 		return VideoResource::collection($this->whenLoaded('videos'));

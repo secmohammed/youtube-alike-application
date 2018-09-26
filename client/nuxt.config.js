@@ -1,3 +1,4 @@
+const webpack = require('webpack')
 module.exports = {
   env: {
     baseUrl: process.env.BASE_URL || 'http://localhost:3000'
@@ -59,7 +60,7 @@ module.exports = {
     baseURL: 'http://127.0.0.1:8000/api',
     redirectError: {
       401: '/auth/login',
-      // 404: '/notfound'
+      500: '/'
     }
   },
   auth: {
@@ -98,6 +99,11 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    plugins: [
+      new webpack.ProvidePlugin({
+        '_': 'lodash'
+      })
+    ],
     vendor: ['vee-validate'],
     /*
      ** Run ESLint on save

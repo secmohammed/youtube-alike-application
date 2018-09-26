@@ -28,12 +28,7 @@
                   </div>
 
                 </div>
-                <nav class="level is-pulled-right">
-                  <p class="level-item has-text-right">
-                    <a class="button is-default"><i class="fa fa-thumbs-up"></i> 5254</a>
-                    <a class="button is-default"><i class="fa fa-thumbs-down"></i> 1</a>
-                  </p>
-                </nav>
+                <VideoVoting/>
               </div>
             </div>
           </article>
@@ -44,8 +39,8 @@
           <hr>
           <p v-if="video.description.length > 10" class="has-text-centered has-text-muted video-description-more">Show More</p>
         </div>
-        <div class="box">
-          <article class="media">
+        <div class="box" >
+          <article class="media" v-if="authenticated">
             <figure class="media-left">
               <p class="image is-64x64">
                 <img :src="user.avatar">
@@ -92,7 +87,11 @@
 </template>
 <script>
     import {mapGetters,mapActions} from 'vuex'
+    import VideoVoting from '~/components/Votes/VideoVoting'
     export default {
+        components: {
+            VideoVoting
+        },
         data(){
             return {
                 duration : null
@@ -120,9 +119,6 @@
         },
         async fetch({ store , params }){
             await store.dispatch('video/setCurrentVideo', params.uid)
-            // let response = await app.axios.$get(`/videos/${params.uid}`)
-            // store.commit('video/SET_CURRENT_VIDEO', response.data)
-            // store.commit('video/SET_VIDEO', response.data)
         },
         methods : {
             ...mapActions('video',{

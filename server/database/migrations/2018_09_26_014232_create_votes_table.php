@@ -18,7 +18,7 @@ class CreateVotesTable extends Migration {
 			$table->string('voteable_type');
 			$table->boolean('type')->default(true);
 			$table->timestamps();
-			$table->foregin('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 		});
 	}
 

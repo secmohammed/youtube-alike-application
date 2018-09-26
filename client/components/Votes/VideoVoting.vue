@@ -7,5 +7,19 @@
     </nav>
 </template>
 <script>
-    
+import {mapGetters} from 'vuex'
+export default {
+    data(){
+        return {
+            up : null,
+            down : null,
+            userVote : null,
+        }
+    },
+    computed : {
+        ...mapGetters('video',{
+            video : 'getCurrentVideo'
+        })
+    }
+};
 </script>

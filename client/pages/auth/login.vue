@@ -22,7 +22,7 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <button class="button is-large is-primary is-fullwidth" type="submit">Login</button>
+                    <button class="button is-large is-primary is-fullwidth" :disabled="errors.any() || isCompleted" type="submit">Login</button>
                     <p class="help has-text-grey has-text-centered"><nuxt-link :to="{ name : 'auth-forgot-password'}">Forgot your password?</nuxt-link></p>
                 </div>
             </div>
@@ -42,6 +42,11 @@
                     password : null,
                     email : null,
                 }
+            }
+        },
+        computed : {
+            isCompleted(){
+                return this.form.password && this.email
             }
         },
         methods : {
