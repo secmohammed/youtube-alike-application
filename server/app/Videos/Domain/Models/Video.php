@@ -7,9 +7,10 @@ use App\Users\Domain\Models\User;
 use App\Videos\Domain\Models\View;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
 class Video extends Model {
-	use SoftDeletes;
+	use SoftDeletes, Searchable;
 	protected $fillable = [
 		'channel_id',
 		'uid',
@@ -58,7 +59,6 @@ class Video extends Model {
 		if (!$user && auth()->check()) {
 			$user = auth()->user();
 		}
-		dd($user);
 		if (!$user && $this->isPrivate()) {
 			return false;
 		}

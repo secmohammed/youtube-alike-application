@@ -12,6 +12,15 @@
             </div>
         </div>
         <div id="nav" class="navbar-menu">
+            <div class="navbar-start">
+                <form action="#" class="navbar-item">
+                    <div class="field">
+                        <div class="control">
+                            <input class="input is-medium" @keyup.enter="searchData" type="search" id="channels-search">
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="navbar-end">
                 <template v-if="authenticated">
                     <nuxt-link :to="{ name : 'channel-slug', params : { slug : channel.slug }}" v-for="(channel,index) in channels" class="navbar-item" :key="channel.slug" v-if="index <= 1">
@@ -50,7 +59,7 @@
 </nav>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapActions} from 'vuex'
 export default {
     computed : {
         ...mapGetters('channel' , {
@@ -58,8 +67,19 @@ export default {
         })
     },
     methods : {
+        ...mapActions('channel',{
+            searchChannelsAndVideos : 'setSearchData'
+        }),
         logout(){
             this.$auth.logout();
+        },
+        searchData(e){
+            this.searchChannelsAndVideos(e.target.value).then(() => {
+                this.$router.push({
+                    name : 'search',
+                    query :{ query : e.target.value}
+                })
+            })
         }
     }
 };

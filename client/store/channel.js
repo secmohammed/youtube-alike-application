@@ -6,7 +6,8 @@ import {
 export const state = () => ({
     channels: [],
     currentChannel: null,
-    channelForm: {}
+    channelForm: {},
+    searches: []
 })
 
 export const getters = {
@@ -15,12 +16,16 @@ export const getters = {
     getUserChannels: (state) => (userId) => state.channels.filter(channel => channel.user.id == userId),
     getChannel: (state) => (slug) => state.channels.find(channel => channel.slug == slug),
     getChannelForm: (state) => state.channelForm,
+    getSearchedData: (state) => state.searches,
     getField,
 
 
 }
 
 export const mutations = {
+    SET_SEARCH_DATA(state, data) {
+        state.searches = data
+    },
     SET_CHANNELS(state, channels) {
         state.channels = channels
     },
@@ -118,5 +123,16 @@ export const actions = {
         })
 
     },
+    async setSearchData({
+        commit,
+        dispatch
+    }, query) {
+        let response = await this.$axios.$get('/search?q=' + query)
+        commit('SET_SEARCH_DATA', response.data)
+        commit('video/SET_SEARCH_DATA', response.videos, {
+            root: true
+        })
+        return response
+    }
 
 }

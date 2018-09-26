@@ -12,6 +12,7 @@ export const state = () => ({
         visibility: null
     },
     videoUploadProgress: 0,
+    searches: []
 })
 export const getters = {
     videos: (state) => state.videos,
@@ -19,9 +20,11 @@ export const getters = {
     getUserVideos: (state) => (userId) => state.videos.filter(video => video.user_id == userId),
     getCurrentVideo: (state) => state.currentVideo,
     getVideoForm: (state) => state.videoForm,
+    getSearchedData: (state) => state.searches,
     getField,
 }
 export const mutations = {
+    SET_SEARCH_DATA: (state, data) => state.searches = data,
     SET_VIDEOS: (state, videos) => state.videos = videos,
     SET_VIDEO: (state, video) => state.videos.push(video),
     UPDATE_VIDEO_FORM: (state, video) => {
@@ -169,6 +172,13 @@ export const actions = {
                 video: video,
                 views: response.data.views
             })
+        })
+    },
+    setSearchData({
+        commit
+    }, query) {
+        return this.$axios.$get('/search?q=' + query).then((response) => {
+            commit('SET_SEARCH_DATA', response.data)
         })
     }
 }

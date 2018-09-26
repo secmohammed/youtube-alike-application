@@ -6,3 +6,4 @@ Route::get('/user/{user}/videos', App\Videos\Actions\IndexUserVideosAction::clas
 Route::get('/videos/{video}', App\Videos\Actions\ShowVideoAction::class);
 Route::post('/webhook/encoding', App\Videos\Actions\EncodingWebhookAction::class);
 Route::post('/videos/{video}/views', App\Videos\Actions\StoreVideoViewAction::class);
+Route::get('/search', App\App\Actions\IndexSearchAction::class);
