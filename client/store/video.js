@@ -69,7 +69,6 @@ export const actions = {
         rootGetters
     }) {
         return this.$axios.$get(`/user/${rootGetters['auth/user'].id}/videos`).then(response => {
-            console.log(response.data)
             commit('SET_VIDEOS', response.data)
             return response.data
         })
@@ -80,16 +79,16 @@ export const actions = {
     setVideo: ({
         commit
     }, video) => commit('SET_VIDEO', video),
-    setCurrentVideo: ({
+    setCurrentVideo({
         commit,
         getters
-    }, uid) => {
+    }, uid) {
         let localVideo = getters.getVideo(uid)
         if (localVideo) {
             commit('SET_CURRENT_VIDEO', localVideo)
             return getters.getCurrentVideo
         } else {
-            return this.$axios.get(`/videos/${uid}`).then(res => {
+            return this.$axios.$get(`/videos/${uid}`).then(res => {
                 commit('SET_CURRENT_VIDEO', res.data)
                 commit('SET_VIDEO', res.data)
                 return res.data

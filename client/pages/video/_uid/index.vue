@@ -118,8 +118,11 @@
                 }
             }
         },
-        async asyncData({ store , params , redirect}){
+        async fetch({ store , params }){
             await store.dispatch('video/setCurrentVideo', params.uid)
+            // let response = await app.axios.$get(`/videos/${params.uid}`)
+            // store.commit('video/SET_CURRENT_VIDEO', response.data)
+            // store.commit('video/SET_VIDEO', response.data)
         },
         methods : {
             ...mapActions('video',{

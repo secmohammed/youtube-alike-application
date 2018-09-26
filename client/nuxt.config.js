@@ -35,43 +35,58 @@ module.exports = {
   },
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/auth'
+    '@nuxtjs/auth',
+    '@nuxtjs/toast',
   ],
+  toast: {
+    position: 'top-right',
+    duration: 800,
+  },
   router: {
-    middleware: [
-      'clearValidationErrors'
-    ]
+    middleware: []
   },
   plugins: [
     './plugins/mixins/user.js',
-    './plugins/mixins/validation.js',
     './plugins/axios.js', {
       src: './plugins/video-player.js',
       ssr: false
-    }
+    }, {
+      src: './plugins/vee-validate.js',
+      ssr: true
+    },
   ],
   axios: {
-    baseURL: 'http://127.0.0.1:8000/api'
+    baseURL: 'http://127.0.0.1:8000/api',
+    redirectError: {
+      401: '/auth/login',
+      // 404: '/notfound'
+    }
   },
   auth: {
-    redirect: {
-      login: '/auth/login'
-    },
-    endpoints: {
-      login: {
-        url: 'auth/login',
-        method: 'post',
-        propertyName: 'meta.token'
-      },
-      user: {
-        url: 'user',
-        method: 'get',
-        propertyName: 'data'
-      },
-      logout: {
-        url: 'auth/logout',
-        method: 'post',
-        propertyName: 'data'
+    strategies: {
+      local: {
+        redirect: {
+          login: '/auth/login'
+        },
+
+        endpoints: {
+          login: {
+            url: '/auth/login',
+            method: 'post',
+            propertyName: 'meta.token'
+          },
+          user: {
+            url: '/user',
+            method: 'get',
+            propertyName: 'data'
+          },
+          logout: {
+            url: '/auth/logout',
+            method: 'post',
+            propertyName: 'data'
+          }
+        }
+
       }
     }
   },
@@ -83,6 +98,7 @@ module.exports = {
    ** Build configuration
    */
   build: {
+    vendor: ['vee-validate'],
     /*
      ** Run ESLint on save
      */

@@ -28,14 +28,8 @@
                   <div class="column is-6">
                         <span class="title is-4 is-pulled-right">124 304 views</span>
                   </div>
-
+                  <VideoVoting />
                 </div>
-                <nav class="level is-pulled-right">
-                  <p class="level-item has-text-right">
-                    <a class="button is-default"><i class="fa fa-thumbs-up"></i> 5254</a>
-                    <a class="button is-default"><i class="fa fa-thumbs-down"></i> 1</a>
-                  </p>
-                </nav>
               </div>
             </div>
           </article>
@@ -201,3 +195,11 @@
     </div>
 </div>
 </template>
+<script>
+  import VideoVoting from '~/components/Votes/VideoVoting'
+  export default {
+    components : {
+      VideoVoting
+    }
+  };
+</script>

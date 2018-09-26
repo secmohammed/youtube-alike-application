@@ -5,6 +5,7 @@ namespace App\Videos\Domain\Models;
 use App\Channels\Domain\Models\Channel;
 use App\Users\Domain\Models\User;
 use App\Videos\Domain\Models\View;
+use App\Votes\Domain\Models\Vote;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
@@ -66,5 +67,8 @@ class Video extends Model {
 			return false;
 		}
 		return true;
+	}
+	public function votes() {
+		return $this->morphMany(Vote::class, 'voteable');
 	}
 }

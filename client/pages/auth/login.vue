@@ -9,16 +9,16 @@
             <div class="field">
                 <label class="label">E-mail</label>
                 <div class="control">
-                    <input class="input is-large" :class="{'is-danger' : errors.email}" v-model="form.email" type="text" placeholder="E-mail address.">
+                    <input class="input is-large" name="email" v-validate.lazy="'required|min:8|email'" :class="{'is-danger' : errors.has('email')}" v-model="form.email" type="text" placeholder="E-mail address.">
                 </div>
-                <p class="help is-danger" v-if="errors.email">{{ errors.email[0] }}</p>
+                <p class="help is-danger" v-if="errors.has('email')">{{ errors.first('email') }}</p>
             </div>
             <div class="field">
                 <label class="label">Password</label>
                 <div class="control">
-                    <input class="input is-large"  :class="{'is-danger' : errors.password}" v-model="form.password" type="password" placeholder="Password">
+                    <input class="input is-large" name="password" v-validate.lazy="'required|min:8|max:32'" :class="{'is-danger' : errors.has('password')}" v-model="form.password" type="password" placeholder="Password">
                 </div>
-                <p class="help is-danger" v-if="errors.password">{{ errors.password[0] }}</p>
+                <p class="help is-danger" v-if="errors.has('password')">{{ errors.first('password') }}</p>
             </div>
             <div class="field">
                 <div class="control">

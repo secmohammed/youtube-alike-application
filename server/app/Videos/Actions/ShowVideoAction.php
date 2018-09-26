@@ -10,7 +10,9 @@ class ShowVideoAction {
 	public function __construct(ShowVideoResponder $responder, ShowVideoService $services) {
 		$this->responder = $responder;
 		$this->services = $services;
-		\JWTAuth::parseToken()->authenticate();
+		if (request()->headers->has('Authorization')) {
+			\JWTAuth::parseToken()->authenticate();
+		}
 	}
 	public function __invoke(Video $video) {
 		return $this->responder->withResponse(

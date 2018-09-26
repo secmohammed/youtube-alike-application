@@ -7,9 +7,6 @@ use App\App\Domain\Payloads\GenericPayload;
 use App\App\Domain\Payloads\UnauthorizedPayload;
 use App\App\Domain\Payloads\ValidationPayload;
 use App\Users\Domain\Repositories\UserRepository;
-use Carbon\Carbon;
-use JWTAuth;
-use Tymon\JWTAuth\Exceptions\JWTException;
 
 class LoginUserService implements ServiceInterface {
 	protected $users;
@@ -20,16 +17,7 @@ class LoginUserService implements ServiceInterface {
 		if (($validator = $this->validate($data))->fails()) {
 			return new ValidationPayload($validator->errors());
 		}
-		try {
-			$token = JWTAuth::attempt($data, [
-				'exp' => Carbon::now()->addWeek()->timestamp,
-			]);
-		} catch (JWTException $e) {
-			return new InternalErrorPayload([
-				'error' => 'Could not create token.',
-			]);
-		}
-		if (!$token) {
+		if (!auth()->attempt($data)) {
 			return new UnauthorizedPayload([
 				'error' => 'Could not authenticate user.',
 			]);
@@ -38,8 +26,8 @@ class LoginUserService implements ServiceInterface {
 	}
 	protected function validate($data) {
 		return validator($data, [
-			'email' => 'required',
-			'password' => 'required',
+			'email' => 'required|email',
+			'password' => 'required|min:8|max:32',
 		]);
 	}
 }
