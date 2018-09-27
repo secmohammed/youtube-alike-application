@@ -9,17 +9,13 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
-    data(){
+    // it works with mounted.
+    async asyncData({app, params}){
+        let response = await app.$axios.$get(`/videos/${params.uid}/votes`)
         return {
-            up : null,
-            down : null,
-            userVote : null,
+            can_vote : response.data.can_vote
         }
+
     },
-    computed : {
-        ...mapGetters('video',{
-            video : 'getCurrentVideo'
-        })
-    }
 };
 </script>

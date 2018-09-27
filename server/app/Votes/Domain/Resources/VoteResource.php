@@ -15,7 +15,7 @@ class VoteResource extends JsonResource {
 	 */
 	public function toArray($request) {
 		return [
-			'user_vote' => $this->voteFromUser(auth()->user())->first()->type ?? null,
+			'user_vote' => auth()->check() ? $this->voteFromUser(auth()->user())->first()->type ?? null : null,
 			'can_vote' => $this->votesAllowed(),
 			$this->mergeWhen($this->votesAllowed(), [
 				'up' => $this->upVotes()->count(),
