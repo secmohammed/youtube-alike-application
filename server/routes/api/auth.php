@@ -10,3 +10,5 @@ Route::post('/videos/{channel}', App\Videos\Actions\CreateVideoAction::class);
  */
 Route::post('/videos/{video}/update', App\Videos\Actions\UpdateVideoAction::class);
 Route::post('/videos/{video}/views', App\Videos\Actions\StoreVideoViewAction::class);
+
+// Create Channel route.

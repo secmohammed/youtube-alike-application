@@ -15,7 +15,9 @@
    ✔ Reset Password @done (18-09-13 02:09)
    - Activation Process.
 - Channel
-
+  - Create index Channel route
+  - Create "create channel" route
+  - upload image file instead of base64.
 - Videos.
   - Check if Video is private
     - If user is owning this one, show it

@@ -20,7 +20,7 @@ class CreateVideosTable extends Migration {
 			$table->boolean('processed')->default(false);
 			$table->string('video_id')->nullable();
 			$table->string('video_filename')->nullable();
-			$table->string('thumbnail')->nullable();
+			$table->string('thumbnail')->default('default.png');
 			$table->enum('visibility', ['public', 'unlisted', 'private']);
 			$table->boolean('allow_votes')->default(false);
 			$table->boolean('allow_comments')->default(false);
