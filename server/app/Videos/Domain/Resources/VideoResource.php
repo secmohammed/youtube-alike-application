@@ -4,6 +4,7 @@ namespace App\Videos\Domain\Resources;
 
 use App\Channels\Domain\Resources\ChannelResource;
 use App\Users\Domain\Collection\UserResource;
+use App\Votes\Domain\Resources\VoteResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class VideoResource extends JsonResource {
@@ -29,6 +30,9 @@ class VideoResource extends JsonResource {
 			'allow_comments' => $this->allow_comments,
 			'allow_votes' => $this->allow_votes,
 			'video_filename' => $this->video_filename,
+			$this->mergeWhen($this->allow_votes, [
+				'votes' => new VoteResource($this->resource),
+			]),
 			'created_at_human' => $this->created_at->diffForHumans(),
 			'user' => new UserResource($this->channel->user),
 		];

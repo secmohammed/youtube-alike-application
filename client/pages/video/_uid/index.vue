@@ -28,7 +28,7 @@
                   </div>
 
                 </div>
-                <VideoVoting/>
+                <VideoVoting v-if="video.allow_votes" :votes="video.votes"/>
               </div>
             </div>
           </article>
