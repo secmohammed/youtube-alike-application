@@ -15,7 +15,7 @@ class ChannelObserver {
 	public function updating(Channel $channel) {
 		foreach ($channel->getFillable() as $fillable) {
 			if ($channel->avatar instanceof UploadedFile) {
-				$channel->avatar = uniqid('', true) . '.' . $channel->avatar->getClientOriginalExtension();
+				$channel->avatar = $channel->getOriginal('avatar');
 			} else {
 				$channel->$fillable = $channel->getAttributes()[$fillable] ?? $channel->getOriginal($fillable);
 			}

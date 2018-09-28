@@ -5,7 +5,7 @@
             <div class="column is-4 is-offset-4">
                 <h1 class="title has-text-grey">Edit Your {{ channel.name }} Channel.</h1>
                 <div class="box">
-                        <form action="#" @submit.prevent="submit">
+                        <form action="#" method="POST" @submit.prevent="submit">
             <div class="field">
                 <label class="label">Name</label>
                 <div class="control">
@@ -76,15 +76,12 @@
             ...mapActions('channel',{
                 updateChannel: 'UPDATE_CHANNEL'
             }),
-            updateAvatar(e) {
-              let reader = new FileReader();
-              reader.readAsDataURL(e.target.files[0]);
-              reader.onload = e => {
-                this.avatar = e.target.result;
-              };
+            updateAvatar() {
+                this.avatar = this.$refs.fileInput.files[0];
+
             },
             submit(){
-                this.updateChannel().then(res => {
+                this.updateChannel(this.channel.slug).then(res => {
                     this.$router.push({
                         name : 'channel-slug-edit',
                         params : { slug : res.slug}

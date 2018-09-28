@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class UploadImage implements ShouldQueue {
+class RemoveUploadedImage implements ShouldQueue {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 	public $channel;
 	/**
@@ -27,12 +27,6 @@ class UploadImage implements ShouldQueue {
 	 * @return void
 	 */
 	public function handle() {
-		$path = storage_path('app/public/images/' . $this->channel->avatar);
-		\Image::make($path)->encode('png')->fit(40, 40, function ($constraint) {
-			$constraint->upsize();
-		})->save($path);
-		if (\Storage::disk('s3storage')->put('profile/' . $this->channel->avatar, fopen($path, 'r+'))) {
-			\File::delete($path);
-		}
+		\Storage::disk('s3storage')->delete('profile/' . $this->channel->avatar);
 	}
 }

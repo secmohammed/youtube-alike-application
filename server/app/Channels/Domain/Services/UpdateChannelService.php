@@ -6,6 +6,7 @@ use App\App\Domain\Contracts\ServiceInterface;
 use App\App\Domain\Payloads\GenericPayload;
 use App\App\Domain\Payloads\UnauthorizedPayload;
 use App\App\Domain\Payloads\ValidationPayload;
+use App\Channels\Domain\Jobs\RemoveUploadedImage;
 use App\Channels\Domain\Jobs\UploadImage;
 
 class UpdateChannelService extends CreateChannelService implements ServiceInterface {
@@ -20,7 +21,8 @@ class UpdateChannelService extends CreateChannelService implements ServiceInterf
 		}
 		$channel->update($request->only(['avatar', 'slug', 'name', 'description']));
 		if ($request->has('avatar')) {
-			$this->pushImageToStorage($request->avatar, $this->channel);
+			$this->pushImageToStorage($request->avatar, $channel);
+			dispatch(new RemoveUploadedImage($channel));
 			dispatch(new UploadImage($channel));
 		}
 		return new GenericPayload($channel);

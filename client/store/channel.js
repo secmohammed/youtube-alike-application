@@ -35,8 +35,8 @@ export const mutations = {
     SET_CHANNEL(state, channel) {
         state.channels.push(channel)
     },
-    UNSET_CHANNEL(state, channel) {
-        state.channels = state.channels.filter(ch => ch.id !== channel.id)
+    UNSET_CHANNEL(state, slug) {
+        state.channels = state.channels.filter(channel => channel.slug !== slug)
     },
     UPDATE_CHANNEL_FORM: (state, channel) => {
         state.channelForm = channel
@@ -68,10 +68,19 @@ export const actions = {
     UPDATE_CHANNEL({
         commit,
         getters
-    }) {
-        let current = getters.getCurrentChannel
-        return this.$axios.$put(`/channel/${current.slug}`, getters.getChannelForm).then((response) => {
-            commit('UNSET_CHANNEL', current)
+    }, slug) {
+        let current = getters.getChannelForm
+        let form = new FormData()
+        for (let input in getters.getChannelForm) {
+            if (input == 'avatar' && typeof current[input] == 'object') {
+                form.append(input, current[input], current[input].name)
+            }
+            if (input != 'avatar') {
+                form.append(input, current[input])
+            }
+        }
+        return this.$axios.$post(`/channel/${slug}/update`, form).then((response) => {
+            commit('UNSET_CHANNEL', slug)
             commit('SET_CHANNEL', response.data)
             commit('SET_CURRENT_CHANNEL', response.data)
             return response.data
