@@ -8,10 +8,9 @@ use App\Videos\Domain\Models\View;
 use App\Votes\Domain\Models\Vote;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Laravel\Scout\Searchable;
 
 class Video extends Model {
-	use SoftDeletes, Searchable;
+	use SoftDeletes/*, Searchable*/;
 	protected $fillable = [
 		'channel_id',
 		'uid',

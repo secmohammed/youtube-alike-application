@@ -2,6 +2,7 @@
 Route::get('/user', App\Users\Actions\AuthorizedUserAction::class);
 Route::post('/auth/logout', App\Users\Actions\LogoutUserAction::class);
 Route::put('/channel/{channel}', App\Channels\Actions\UpdateChannelAction::class);
+Route::post('/channel', App\Channels\Actions\CreateChannelAction::class);
 Route::delete('/videos/{video}', App\Videos\Actions\DeleteVideoAction::class);
 Route::post('/videos/{channel}', App\Videos\Actions\CreateVideoAction::class);
 /**

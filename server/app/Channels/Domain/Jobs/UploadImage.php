@@ -3,14 +3,11 @@
 namespace App\Channels\Domain\Jobs;
 
 use App\Channels\Domain\Models\Channel;
-use File;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Image;
-use Storage;
 
 class UploadImage implements ShouldQueue {
 	use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
@@ -20,9 +17,13 @@ class UploadImage implements ShouldQueue {
 	 *
 	 * @return void
 	 */
-	public function __construct(Channel $channel, $fileName) {
+	public function __construct(Channel $channel, $fileName = null) {
 		$this->channel = $channel;
-		$this->fileName = $fileName;
+		if (!$fileName) {
+			$this->fileName = $channel->avatar;
+		} else {
+			$this->fileName = $fileName;
+		}
 	}
 
 	/**
@@ -38,7 +39,5 @@ class UploadImage implements ShouldQueue {
 		if (Storage::disk('s3storage')->put('profile/' . $this->fileName, fopen($path, 'r+'))) {
 			File::delete($path);
 		}
-		$this->channel->avatar = $this->fileName;
-		$this->channel->save();
 	}
 }

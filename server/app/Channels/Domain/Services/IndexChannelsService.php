@@ -11,7 +11,7 @@ class IndexChannelsService implements ServiceInterface {
 	public function __construct(ChannelRepository $channels) {
 		$this->channels = $channels;
 	}
-	public function handle($data = []) {
-		return new GenericPayload($this->channels->all());
+	public function handle($request = null) {
+		return new GenericPayload($this->channels->paginate(8));
 	}
 }

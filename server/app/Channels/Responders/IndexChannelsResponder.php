@@ -4,9 +4,10 @@ namespace App\Channels\Responders;
 
 use App\App\Responders\Responder;
 use App\App\Responders\ResponderInterface;
+use App\Channels\Domain\Resources\ChannelResource;
 
 class IndexChannelsResponder extends Responder implements ResponderInterface {
-    public function respond() {
-        //
-    }
+	public function respond() {
+		return ChannelResource::collection($this->response->getData());
+	}
 }

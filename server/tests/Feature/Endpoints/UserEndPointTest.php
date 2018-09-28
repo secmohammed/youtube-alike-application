@@ -14,10 +14,11 @@ use Tests\TestCase;
 class UserEndPointTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
-		$this->actingAs(factory(User::class)->create());
 	}
 	/** @test */
 	public function it_fetches_the_user_channels() {
+		$this->actingAs(factory(User::class)->create());
+
 		auth()->user()->channels()->saveMany(
 			$channels = factory(Channel::class, 3)->create()
 		);
@@ -29,6 +30,8 @@ class UserEndPointTest extends TestCase {
 	}
 	/** @test */
 	public function it_fetches_the_user_videos() {
+		$this->actingAs(factory(User::class)->create());
+
 		auth()->user()->channels()->save(
 			$channel = factory(Channel::class)->create()
 		);
@@ -65,8 +68,8 @@ class UserEndPointTest extends TestCase {
 		]);
 		$token = auth()->guard('api')->attempt(['email' => $user->email, 'password' => 123456789]);
 		$this->assertEquals($token, auth()->guard('api')->getToken());
-		$this->post('/api/auth/logout');
-		$this->assertNull(auth()->guard('api')->getToken());
+		$this->post('/api/auth/logout', [], ['Authorization' => 'Bearer ' . $token]);
+		$this->assertNull(auth()->guard('api')->user());
 	}
 	/** @test */
 	public function it_registers_user() {
@@ -77,7 +80,7 @@ class UserEndPointTest extends TestCase {
 			'name' => 'mohammedosama',
 			'channel_name' => 'Laravel Testing',
 		])->assertStatus(201)->assertJson(["data" => [
-			"id" => 2,
+			"id" => 1,
 			"name" => "mohammedosama",
 			"email" => "mohammedosama@ieee.org",
 			"avatar" => "http://www.gravatar.com/avatar/50aa51d8b081e89d5b382ba39435218c?s=45&d=mm",
@@ -95,6 +98,7 @@ class UserEndPointTest extends TestCase {
 			'email' => $user->email,
 			'password' => 123456789,
 		])->assertResource($resource);
+		auth()->logout();
 		$response = $this->post('/api/auth/login', [
 			'email' => $user->email,
 		])->assertStatus(422)->assertJsonFragment(['password' => ["The password field is required."]]);
@@ -105,7 +109,7 @@ class UserEndPointTest extends TestCase {
 		])->assertJsonFragment(['error' => 'Could not authenticate user.']);
 	}
 	/** @test */
-	public function it_forgots_user_password() {
+	public function it_forgets_user_password() {
 		$user = factory(User::class)->create([
 			'password' => bcrypt(123456789),
 		]);
@@ -145,7 +149,7 @@ class UserEndPointTest extends TestCase {
 			'password_confirmation' => 12345678910,
 			'token' => $token,
 		])->assertStatus(200)->assertJsonFragment(['message' => 'Password Changed Successfully !']);
-		$this->assertTrue(auth()->attempt([
+		$this->assertTrue(!!auth()->attempt([
 			'email' => $user->email,
 			'password' => 12345678910,
 		]));

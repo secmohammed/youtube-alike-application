@@ -5,6 +5,7 @@ namespace Tests\Unit\Integration\Models;
 use App\Channels\Domain\Models\Channel;
 use App\Users\Domain\Models\User;
 use App\Videos\Domain\Models\Video;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class UserTest extends TestCase {
@@ -27,6 +28,11 @@ class UserTest extends TestCase {
 					'user_id' => auth()->id(),
 				])
 		);
+		$channel = factory(Channel::class)->create();
+		$path = storage_path('app/public/videos/test.webm');
+		$file = new UploadedFile($path, 'test.webm', "video/webm", null, true);
+		request()->merge(['video_filename' => $file]);
+
 		auth()->user()->channels->first()->videos()->saveMany(
 			factory(Video::class, 3)->create([
 				'channel_id' => $channel->id,

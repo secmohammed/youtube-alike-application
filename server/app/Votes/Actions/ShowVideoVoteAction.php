@@ -10,10 +10,6 @@ class ShowVideoVoteAction {
 	public function __construct(ShowVideoVoteResponder $responder, ShowVideoVoteService $services) {
 		$this->responder = $responder;
 		$this->services = $services;
-		if (request()->headers->has('Authorization')) {
-			\JWTAuth::parseToken()->authenticate();
-		}
-
 	}
 	public function __invoke(Video $video) {
 		return $this->responder->withResponse(

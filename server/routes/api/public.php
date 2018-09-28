@@ -8,7 +8,7 @@ Route::get('/search', App\App\Actions\IndexSearchAction::class);
 Route::get('/channel/{channel}', App\Channels\Actions\ShowChannelAction::class);
 Route::get('/channel/{channel}/videos', App\Channels\Actions\ShowChannelVideosAction::class);
 // Index Channels route.
-
+Route::get('/channel', App\Channels\Actions\IndexChannelsAction::class);
 /** user area */
 Route::get('/user/{user}/channels', App\Channels\Actions\IndexUserChannelsAction::class);
 Route::get('/user/{user}/videos', App\Videos\Actions\IndexUserVideosAction::class);

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model {
 	// use Searchable;
-	protected $fillable = ['name', 'slug', 'description', 'avatar', 'user_id'];
+	protected $fillable = ['name', 'slug', 'description', 'avatar'];
 	public function getRouteKeyName() {
 		return 'slug';
 	}
