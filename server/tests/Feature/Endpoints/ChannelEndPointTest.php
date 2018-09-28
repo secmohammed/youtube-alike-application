@@ -46,14 +46,16 @@ class ChannelEndPointTest extends TestCase {
 	public function it_updates_a_channel() {
 		$anotherUser = factory(User::class)->create();
 		auth()->guard('api')->login($anotherUser);
-		$this->put('/api/channel/' . $this->channel->slug, [
+		$this->post('/api/channel/' . $this->channel->slug . '/update', [
 			'name' => 'something-really-random',
 			'avatar' => UploadedFile::fake()->image('avatar.jpg'),
 		])->assertStatus(401);
 		auth()->guard('api')->login($this->user);
 		\Queue::fake();
 		$this->assertNull($this->channel->fresh()->avatar);
-		$this->put('/api/channel/' . $this->channel->slug, [
+		\Storage::fake('s3storage');
+		\Storage::fake('public');
+		$this->post('/api/channel/' . $this->channel->slug . '/update', [
 			'name' => 'something-really-random',
 			'avatar' => UploadedFile::fake()->image('avatar.jpg'),
 		], ['Authorization' => 'Bearer ' . auth()->guard('api')->getToken()])->assertStatus(200)->assertJsonFragment(['name' => 'something-really-random']);

@@ -16,7 +16,6 @@ class ParseJWTToken {
 		if (request()->headers->has('Authorization')) {
 			\JWTAuth::parseToken()->authenticate();
 		}
-
 		return $next($request);
 	}
 }

@@ -17,7 +17,7 @@ class UserEndPointTest extends TestCase {
 	}
 	/** @test */
 	public function it_fetches_the_user_channels() {
-		$this->actingAs(factory(User::class)->create());
+		auth()->login(factory(User::class)->create());
 
 		auth()->user()->channels()->saveMany(
 			$channels = factory(Channel::class, 3)->create()

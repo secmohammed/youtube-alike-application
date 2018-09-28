@@ -26,7 +26,7 @@ class UpdateVideoRequest extends FormRequest {
 			'description' => 'nullable',
 			'visibility' => 'nullable|in:private,unlisted,public',
 			'video_filename' => 'nullable|mimes:webm,mp4,mkv',
-			// 'channel_id' => 'required|in:' . $channel_ids,
+			'channel_id' => 'required|in:' . $channel_ids,
 		];
 	}
 }

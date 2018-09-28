@@ -23,6 +23,7 @@ class Video extends Model {
 		'allow_votes',
 		'allow_comments',
 		'processed_percentage',
+		'thumbnail',
 	];
 	protected $casts = [
 		'allow_comments' => 'boolean',
@@ -77,10 +78,10 @@ class Video extends Model {
 		return $this->votes()->VoteType(false);
 	}
 	public function voteFromUser($user) {
-		return $this->votes()->where('user_id', $user->id);
+		return $this->votes()->RecentForUser($user);
 	}
 	public function votesAllowed() {
-		return !!$this->votes_allowed;
+		return $this->allow_votes;
 	}
 
 }

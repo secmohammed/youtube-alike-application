@@ -7,17 +7,9 @@ use App\App\Domain\Payloads\GenericPayload;
 use App\App\Domain\Payloads\ValidationPayload;
 use App\Channels\Domain\Jobs\UploadImage;
 use App\Channels\Domain\Models\Channel;
-use App\Channels\Domain\Repositories\ChannelRepository;
 
 class CreateChannelService implements ServiceInterface {
-	protected $channels;
-	public function __construct(ChannelRepository $channels) {
-		$this->channels = $channels;
-	}
 	public function handle($request = []) {
-		// if (auth()->user()->cannot('create-channel')) {
-
-		// }
 		if (($validator = $this->validate($request->only(['description', 'avatar', 'slug', 'name'])))->fails()) {
 			return new ValidationPayload($validator->errors());
 		}

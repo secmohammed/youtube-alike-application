@@ -7,6 +7,7 @@ use App\App\Responders\ResponderInterface;
 
 class DeleteVideoResponder extends Responder implements ResponderInterface {
 	public function respond() {
-		return response()->json($this->response->getData());
+		return response()->json($this->response->getData(), $this->response->getStatus());
+
 	}
 }
