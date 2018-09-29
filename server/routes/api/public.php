@@ -6,6 +6,8 @@ Route::get('/search', App\App\Actions\IndexSearchAction::class);
 Route::get('/videos/{video}', App\Videos\Actions\ShowVideoAction::class);
 Route::post('/videos/{video}/views', App\Videos\Actions\StoreVideoViewAction::class);
 Route::get('/videos/{video}/votes', \App\Votes\Actions\ShowVideoVoteAction::class);
+Route::get('/videos/{video}/comments', App\Comments\Actions\IndexCommentsAction::class);
+
 /** channel area  */
 Route::get('/channel/{channel}', App\Channels\Actions\ShowChannelAction::class);
 Route::get('/channel/{channel}/videos', App\Channels\Actions\ShowChannelVideosAction::class);

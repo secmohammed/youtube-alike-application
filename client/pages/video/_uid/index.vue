@@ -39,111 +39,76 @@
           <hr>
           <p v-if="video.description.length > 10" class="has-text-centered has-text-muted video-description-more">Show More</p>
         </div>
-        <div class="box" >
-          <article class="media" v-if="authenticated">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <img :src="user.avatar">
-              </p>
-            </figure>
-            <div class="media-content">
-              <p class="control">
-                <textarea class="textarea" placeholder="Add a comment..."></textarea>
-              </p>
-              <br>
-              <nav class="level">
-                <div class="level-left">
-                  <div class="level-item">
-                    <a class="button is-info">Post comment</a>
-                  </div>
-                </div>
-              </nav>
-            </div>
-          </article>
-          <hr>
-          <article class="media">
-            <figure class="media-left">
-              <p class="image is-64x64">
-                <img src="http://placehold.it/128x128">
-              </p>
-            </figure>
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>Barbara Middleton</strong> <small> · 3 hrs</small>
-                  <br>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                  <br>
-                  <small><a>Like</a> · <a>Reply</a></small>
-                </p>
-              </div>
-            </div>
-          </article>
-          <div class="spacer"></div>
-        </div>
+        <IndexComments />
       </div>
     </div>
 </div>
 </template>
 <script>
-    import {mapGetters,mapActions} from 'vuex'
-    import VideoVoting from '~/components/Votes/VideoVoting'
-    export default {
-        components: {
-            VideoVoting
-        },
-        data(){
-            return {
-                duration : null
+import {mapGetters,mapActions} from 'vuex'
+import VideoVoting from '~/components/Votes/VideoVoting'
+import IndexComments from '~/components/Comments/Index'
+export default {
+  components: {
+    VideoVoting,
+    IndexComments
+  },
+  data(){
+    return {
+      duration : null
+    }
+  },
+  computed : {
+    ...mapGetters('video',{
+      video : 'getCurrentVideo'
+    }),
+    ...mapGetters('comment', {
+      comments : 'getCurrentComments'
+    }),
+    playerOptions(){
+      return {
+        height: '920',
+        width : '1080',
+        autoplay: false,
+        muted: false,
+        language: 'en',
+        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        sources: [{
+          type: "video/mp4",
+          src: this.video.video_url,
+        }],
+        poster: this.video.thumbnail,
+      }
+    }
+  },
+  async fetch({ store , params }){
+    await store.dispatch('video/setCurrentVideo', params.uid)
+    await store.dispatch('comment/setCurrentComments', params.uid)
+  },
+  methods : {
+    ...mapActions('video',{
+      createView : 'createView'
+    }),
+    hasHitQuotaView(player){
+      if (!this.duration) {
+        return false;
+      }
+      if (player) {
+        return Math.round(player.currentTime()) === Math.round(10 * this.duration / 100 );
+      }
+    },
+    onPlayerPlaying(player) {
+      if (player) {
+        this.duration = Math.round(player.duration())
+        setInterval(() => {
+            if (this.hasHitQuotaView(player)) {
+              this.createView()
             }
-        },
-        computed : {
-            ...mapGetters('video',{
-                video : 'getCurrentVideo'
-            }),
-            playerOptions(){
-                return {
-                  height: '920',
-                  width : '1080',
-                  autoplay: false,
-                  muted: false,
-                  language: 'en',
-                  playbackRates: [0.7, 1.0, 1.5, 2.0],
-                  sources: [{
-                    type: "video/mp4",
-                    src: this.video.video_url,
-                  }],
-                  poster: this.video.thumbnail,
-                }
-            }
-        },
-        async fetch({ store , params }){
-            await store.dispatch('video/setCurrentVideo', params.uid)
-        },
-        methods : {
-            ...mapActions('video',{
-                createView : 'createView'
-            }),
-            hasHitQuotaView(player){
-                if (!this.duration) {
-                    return false;
-                }
-                if (player) {
-                    return Math.round(player.currentTime()) === Math.round(10 * this.duration / 100 );
-                }
-            },
-            onPlayerPlaying(player) {
-                if (player) {
-                    this.duration = Math.round(player.duration())
-                    setInterval(() => {
-                        if (this.hasHitQuotaView(player)) {
-                            this.createView()
-                        }
-                    }, 1000)
-                }
-            },
-        }
-    };
+        }, 1000)
+      }
+    },
+  }
+};
 </script>
 
 <style scoped>

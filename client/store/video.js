@@ -46,11 +46,18 @@ export const mutations = {
         video_filename: null,
         visibility: null
     },
-    SET_CURRENT_VIDEO_VIEWS: (state) => (views) => state.currentVideo.views = views,
-    SET_VIDEO_VIEWS: (state, getters) => (uid, views) => {
-        let video = getters.getVideo(uid)
+    SET_CURRENT_VIDEO_VOTES: (state, votes) => state.currentVideo.votes = votes,
+    SET_VIDEO_VOTES: (state, payload) => {
+        let video = state.videos.find(video => video.uid == payload.uid)
+        if (video && video.allow_votes) {
+            video.votes = payload.votes
+        }
+    },
+    SET_CURRENT_VIDEO_VIEWS: (state, views) => state.currentVideo.views = views,
+    SET_VIDEO_VIEWS: (state, payload) => {
+        let video = state.videos.find(video => video.uid == payload.uid)
         if (video) {
-            video.views = views
+            video.views = payload.views
         }
     },
     updateField,

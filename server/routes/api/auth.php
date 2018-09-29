@@ -15,3 +15,5 @@ Route::post('/channel', App\Channels\Actions\CreateChannelAction::class);
 Route::delete('/videos/{video}', App\Videos\Actions\DeleteVideoAction::class);
 Route::post('/videos/{channel}', App\Videos\Actions\CreateVideoAction::class);
 Route::post('/videos/{video}/update', App\Videos\Actions\UpdateVideoAction::class);
+Route::post('/videos/{video}/votes', App\Votes\Actions\StoreVideoVoteAction::class);
+Route::delete('/videos/{video}/votes', App\Votes\Actions\DeleteVideoVoteAction::class);

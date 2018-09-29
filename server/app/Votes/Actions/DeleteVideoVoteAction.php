@@ -3,11 +3,11 @@
 namespace App\Votes\Actions;
 
 use App\Videos\Domain\Models\Video;
-use App\Votes\Domain\Services\StoreVideoVoteService;
-use App\Votes\Responders\StoreVideoVoteResponder;
+use App\Votes\Domain\Services\DeleteVideoVoteService;
+use App\Votes\Responders\DeleteVideoVoteResponder;
 
-class StoreVideoVoteAction {
-	public function __construct(StoreVideoVoteResponder $responder, StoreVideoVoteService $services) {
+class DeleteVideoVoteAction {
+	public function __construct(DeleteVideoVoteResponder $responder, DeleteVideoVoteService $services) {
 		$this->responder = $responder;
 		$this->services = $services;
 	}

@@ -30,7 +30,7 @@ class UserEndPointTest extends TestCase {
 	}
 	/** @test */
 	public function it_fetches_the_user_videos() {
-		$this->actingAs(factory(User::class)->create());
+		auth()->login(factory(User::class)->create());
 
 		auth()->user()->channels()->save(
 			$channel = factory(Channel::class)->create()
@@ -45,8 +45,7 @@ class UserEndPointTest extends TestCase {
 		);
 		$this->assertCount(3, auth()->user()->videos);
 		$resource = VideoResource::collection($videos);
-		$response = $this->get('/api/user/' . auth()->id() . '/videos');
-		$response->assertResource($resource);
+		$this->get('/api/user/' . auth()->id() . '/videos')->assertResource($resource);
 	}
 	/** @test */
 	public function it_fetches_the_authenticated_user() {

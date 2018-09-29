@@ -2,7 +2,9 @@
 
 namespace App\Videos\Domain\Models;
 
+use App\App\Domain\Traits\Orderable;
 use App\Channels\Domain\Models\Channel;
+use App\Comments\Domain\Models\Comment;
 use App\Users\Domain\Models\User;
 use App\Videos\Domain\Models\View;
 use App\Votes\Domain\Models\Vote;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Video extends Model {
-	use SoftDeletes/*, Searchable*/;
+	use SoftDeletes, Orderable/*, Searchable*/;
 	protected $fillable = [
 		'channel_id',
 		'uid',
@@ -40,9 +42,6 @@ class Video extends Model {
 	}
 	public function viewCount() {
 		return $this->views->count();
-	}
-	public function scopeLatestFirst($query) {
-		return $query->orderBy('created_at', 'desc');
 	}
 	public function isPrivate() {
 		return $this->visibility === 'private';
@@ -77,11 +76,17 @@ class Video extends Model {
 	public function downVotes() {
 		return $this->votes()->VoteType(false);
 	}
-	public function voteFromUser($user) {
+	public function voteFromUser($user = null) {
+		if (!$user && auth()->check()) {
+			$user = auth()->user();
+		}
 		return $this->votes()->RecentForUser($user);
 	}
 	public function votesAllowed() {
 		return $this->allow_votes;
+	}
+	public function comments() {
+		return $this->morphMany(Comment::class, 'commentable', 'commentable_type')->whereNull('reply_id');
 	}
 
 }

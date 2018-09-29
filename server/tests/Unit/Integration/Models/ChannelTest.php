@@ -11,7 +11,7 @@ use Tests\TestCase;
 class ChannelTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
-		$this->actingAs(factory(User::class)->create());
+		auth()->login(factory(User::class)->create());
 		$this->channel = new Channel;
 	}
 	/** @test */

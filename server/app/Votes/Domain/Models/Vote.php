@@ -27,5 +27,8 @@ class Vote extends Model {
 	public function scopeRecent($query, $column = 'created_at') {
 		return $query->orderBy($column, 'desc');
 	}
+	public function scopeByUser($query) {
+		return $query->where('user_id', auth()->id());
+	}
 
 }
