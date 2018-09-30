@@ -39,7 +39,7 @@
           <hr>
           <p v-if="video.description.length > 10" class="has-text-centered has-text-muted video-description-more">Show More</p>
         </div>
-        <IndexComments />
+        <IndexComments :comments="comments" />
       </div>
     </div>
 </div>

@@ -1,22 +1,40 @@
 <template>
 <div class="box" >
     <CreateComment />
-    <article class="media">
+    <article class="media" v-for="comment in comments" :key="comment.id">
         <figure class="media-left">
             <p class="image is-64x64">
-                <img src="http://placehold.it/128x128">
+                <img :src="comment.user.avatar">
             </p>
         </figure>
         <div class="media-content">
             <div class="content">
                 <p>
-                    <strong>Barbara Middleton</strong> <small> · 3 hrs</small>
+                    <strong>{{ comment.user.name }}</strong> <small> · {{ comment.created_at_human }}</small>
                     <br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                    {{ comment.body }}
                     <br>
                     <small><a>Like</a> · <a>Reply</a></small>
                 </p>
             </div>
+            <article class="media" v-if="comment.replies" v-for="reply in comment.replies" :key="reply.id">
+                <figure class="media-left">
+                    <p class="image is-64x64">
+                        <img :src="reply.user.avatar">
+                    </p>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ reply.user.name }}</strong> <small> · {{ reply.created_at_human }}</small>
+                            <br>
+                            {{ reply.body }}
+                            <br>
+                            <small><a>Like</a> · <a>Reply</a></small>
+                        </p>
+                    </div>
+                </div>
+            </article>
         </div>
     </article>
     <div class="spacer"></div>

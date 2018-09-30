@@ -11,7 +11,7 @@ use Tests\TestCase;
 class UserTest extends TestCase {
 	public function setUp() {
 		parent::setUp();
-		$this->actingAs(factory(User::class)->create());
+		auth()->login(factory(User::class)->create());
 	}
 	/** @test */
 	public function it_has_many_channels() {

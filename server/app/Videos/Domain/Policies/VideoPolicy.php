@@ -18,4 +18,10 @@ class VideoPolicy {
 	public function access( ? User $user, Video $video) {
 		return $video->canBeAccessed($user);
 	}
+	public function vote(User $user, Video $video) {
+		return (!$video->canBeAccessed($user) || !$video->votesAllowed()) ? false : true;
+	}
+	public function comment(User $user, Video $video) {
+		return (!$video->canBeAccessed($user) || !$video->commentsAllowed()) ? false : true;
+	}
 }

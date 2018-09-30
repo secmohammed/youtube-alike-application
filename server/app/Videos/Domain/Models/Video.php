@@ -85,6 +85,9 @@ class Video extends Model {
 	public function votesAllowed() {
 		return $this->allow_votes;
 	}
+	public function commentsAllowed() {
+		return $this->allow_comments;
+	}
 	public function comments() {
 		return $this->morphMany(Comment::class, 'commentable', 'commentable_type')->whereNull('reply_id');
 	}
