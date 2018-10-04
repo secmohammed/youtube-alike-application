@@ -41,6 +41,34 @@
         </div>
         <IndexComments :comments="comments" />
       </div>
+        <div class="column is-4">
+        <div class="box related-list">
+          <p class="autoplay">
+            <span class="autoplay-title">Up next</span>
+            <span class="autoplay-toggle">
+              Autoplay
+              <i class="fa fa-info-circle"></i>
+            </span>
+          </p>
+          <article class="media related-card">
+            <div class="media-left">
+              <figure class="image">
+                <img src="http://placehold.it/120x90" alt="Image">
+              </figure>
+            </div>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <span class="video-title">A video title</span>
+                  <span class="video-account">asasdas</span>
+                  <span class="video-views">239 views</span>
+                </p>
+              </div>
+            </div>
+          </article>
+          <hr>
+        </div>
+      </div>
     </div>
 </div>
 </template>
@@ -69,8 +97,8 @@ export default {
     }),
     playerOptions(){
       return {
-        height: '920',
-        width : '1080',
+        height: '500',
+        width : '800',
         autoplay: false,
         muted: false,
         language: 'en',

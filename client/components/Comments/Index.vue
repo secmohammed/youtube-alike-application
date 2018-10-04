@@ -32,7 +32,7 @@
                             <br>
                             {{ reply.body }}
                             <br>
-                            <small><a>Like</a><a @click.prevent="deleteReply(reply.id)" v-if="user.id == reply.user.id">Delete</a></small>
+                            <small><a>Like</a> . <a @click.prevent="deleteReply(reply.id)" v-if="user.id == reply.user.id">Delete</a></small>
                         </p>
                     </div>
                 </div>

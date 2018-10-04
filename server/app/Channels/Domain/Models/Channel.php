@@ -7,9 +7,10 @@ use App\Users\Domain\Models\User;
 use App\Videos\Domain\Models\Video;
 use App\Videos\Domain\Models\View;
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Channel extends Model {
-	// use Searchable;
+	use Searchable;
 	protected $fillable = ['name', 'slug', 'description', 'avatar'];
 	public function getRouteKeyName() {
 		return 'slug';

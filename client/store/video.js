@@ -92,9 +92,25 @@ export const actions = {
         rootGetters
     }) {
         return this.$axios.$get(`/user/${rootGetters['auth/user'].id}/videos`).then(response => {
-            console.log(response.data.data)
-            commit('SET_VIDEOS', response.data)
-            return response.data
+            if (response.data.length) {
+                commit('SET_VIDEOS', response.data)
+                return response.data
+            }
+        })
+    },
+    syncUserVideos({
+        commit,
+        getters,
+        rootGetters
+    }) {
+        return this.$axios.$get(`/user/${rootGetters['auth/user'].id}/videos`).then(response => {
+            if (response.data.length) {
+                response.data.forEach((video, index) => {
+                    if (!getters.getVideo(video.uid)) {
+                        commit('SET_VIDEO', video)
+                    }
+                })
+            }
         })
     },
     setVideos: ({
