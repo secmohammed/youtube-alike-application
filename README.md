@@ -20,3 +20,7 @@ It still needs
 
 - Indexing Videos on the sidebar of single video.
 - Likes & Dislikes For Comments & Replies.
+- Testing
+    - Vote
+    - Comment
+    - Subscription
