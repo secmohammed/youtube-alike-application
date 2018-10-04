@@ -7,13 +7,13 @@
     </figure>
     <div class="media-content">
         <p class="control">
-            <textarea class="textarea" name="body" v-model="body" placeholder="Add a comment..." v-validate.lazy="'required|min:3|max:250'"></textarea>
+            <textarea class="textarea" name="body" v-model="body" placeholder="Add a reply..." v-validate.lazy="'required|min:3|max:250'"></textarea>
         </p>
         <br>
         <nav class="level">
             <div class="level-left">
                 <div class="level-item">
-                    <button class="button is-info" type="submit" @click.prevent="submit" :disabled="errors.any() || !isCompleted">Post comment</button>
+                    <button class="button is-info" type="submit" @click.prevent="createReply($route.params.uid)" :disabled="errors.any() || !isCompleted">Post Reply</button>
                 </div>
             </div>
             <div class="level-right">
@@ -29,7 +29,7 @@
     export default {
         computed : {
             ...mapFields('comment', {
-               body :  'commentForm.body',
+               body :  'replyForm.body',
             }),
 
             isCompleted(){
@@ -38,11 +38,8 @@
         },
         methods : {
             ...mapActions('comment',{
-                create : 'createComment'
+                createReply : 'createReply'
             }),
-            submit(){
-                this.create(this.$route.params.uid)
-            }
         }
     };
 </script>

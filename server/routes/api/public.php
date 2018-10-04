@@ -15,3 +15,7 @@ Route::get('/channel', App\Channels\Actions\IndexChannelsAction::class);
 /** user area */
 Route::get('/user/{user}/channels', App\Channels\Actions\IndexUserChannelsAction::class);
 Route::get('/user/{user}/videos', App\Videos\Actions\IndexUserVideosAction::class);
+/**
+ * Subscription Area.
+ */
+Route::get('/subscriptions/{channel}', App\Subscriptions\Actions\ShowSubscriptionAction::class);

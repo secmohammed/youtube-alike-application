@@ -50,9 +50,13 @@
 import {mapGetters , mapActions} from 'vuex'
 export default {
   middleware : 'auth',
+  async fetch({app , store , params}){
+    let response = await app.$axios.$get(`/user/${params.id}/videos`)
+    await store.dispatch('video/setVideo',response.data[0])
+  },
   computed : {
     videos(){
-      return this.getUserVideos(this.user.id)
+      return this.getUserVideos(this.$route.params.id)
     },
     ...mapGetters('video',{
       getUserVideos : 'getUserVideos'

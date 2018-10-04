@@ -20,7 +20,7 @@
                     <p>
                       <strong>{{ video.channel.name }}</strong>
                       <br>
-                      <a href="#" class="button is-danger"><i class="fa fa-plus-square"></i>Subscribe</a>
+                      <SubscribeButton v-if="authenticated" :channelSlug="video.channel.slug"/>
                     </p>
                   </div>
                   <div class="column is-6">
@@ -28,7 +28,7 @@
                   </div>
 
                 </div>
-                <VideoVoting v-if="video.allow_votes" :votes="video.votes"/>
+                <VideoVoting v-if="video.allow_votes && authenticated" :votes="video.votes"/>
               </div>
             </div>
           </article>
@@ -48,10 +48,12 @@
 import {mapGetters,mapActions} from 'vuex'
 import VideoVoting from '~/components/Votes/VideoVoting'
 import IndexComments from '~/components/Comments/Index'
+import SubscribeButton from '~/components/SubscribeButton'
 export default {
   components: {
     VideoVoting,
-    IndexComments
+    IndexComments,
+    SubscribeButton
   },
   data(){
     return {

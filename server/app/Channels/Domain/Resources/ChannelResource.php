@@ -24,6 +24,7 @@ class ChannelResource extends JsonResource {
 			'videos' => $this->when($this->conditionallyLoadFilteredVideos(), $this->conditionallyLoadFilteredVideos()),
 			'created_at_human' => $this->created_at->diffForHumans(),
 			'updated_at_human' => $this->updated_at->diffForHumans(),
+			'views' => $this->totalVideoViews(),
 		];
 	}
 	protected function when($condition, $value, $default = null) {

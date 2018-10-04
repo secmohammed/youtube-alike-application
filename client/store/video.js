@@ -12,7 +12,8 @@ export const state = () => ({
         visibility: null
     },
     videoUploadProgress: 0,
-    searches: []
+    searches: [],
+    subscriptionVideos: []
 })
 export const getters = {
     videos: (state) => state.videos,
@@ -21,12 +22,13 @@ export const getters = {
     getCurrentVideo: (state) => state.currentVideo,
     getVideoForm: (state) => state.videoForm,
     getSearchedData: (state) => state.searches,
+    getSubscriptionVideos: (state) => state.subscriptionVideos,
     getField,
 }
 export const mutations = {
     SET_SEARCH_DATA: (state, data) => state.searches = data,
     SET_VIDEOS: (state, videos) => state.videos = videos,
-    SET_VIDEO: (state, video) => state.videos.push(video),
+    SET_VIDEO: (state, video) => state.videos.push(video[0]),
     UPDATE_VIDEO_FORM: (state, video) => {
         state.videoForm = video
     },
@@ -60,6 +62,10 @@ export const mutations = {
             video.views = payload.views
         }
     },
+    // Improve : once the user is subscribing to a new channel ,fetch its videos and push to subscriptions instantly.
+    SET_SUBSCRIPTION_VIDEOS(state, videos) {
+        state.subscriptionVideos = videos
+    },
     updateField,
 }
 export const actions = {
@@ -69,13 +75,24 @@ export const actions = {
     }) {
         if (rootGetters['auth/authenticated']) {
             await dispatch('fetchUserVideos')
+            await dispatch('fetchSubscriptionVideos')
         }
+    },
+    fetchSubscriptionVideos({
+        commit,
+    }) {
+        return this.$axios.$get('/subscription/videos').then(response => {
+            commit('SET_SUBSCRIPTION_VIDEOS', response.data)
+            return response.data
+        })
+
     },
     fetchUserVideos({
         commit,
         rootGetters
     }) {
         return this.$axios.$get(`/user/${rootGetters['auth/user'].id}/videos`).then(response => {
+            console.log(response.data.data)
             commit('SET_VIDEOS', response.data)
             return response.data
         })

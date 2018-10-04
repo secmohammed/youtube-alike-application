@@ -64,12 +64,11 @@ module.exports = {
     }
   },
   auth: {
+    redirect: {
+      login: '/auth/login'
+    },
     strategies: {
       local: {
-        redirect: {
-          login: '/auth/login'
-        },
-
         endpoints: {
           login: {
             url: '/auth/login',

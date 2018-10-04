@@ -4,6 +4,7 @@ namespace App\Users\Domain\Models;
 
 use App\App\Domain\Traits\CanResetPasswordTrait as CanResetPassword;
 use App\Channels\Domain\Models\Channel;
+use App\Subscriptions\Domain\Models\Subscription;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -37,6 +38,18 @@ class User extends Authenticatable implements CanResetPasswordContract, JWTSubje
 	}
 	public function videos() {
 		return $this->hasManyThrough(\App\Videos\Domain\Models\Video::class, \App\Channels\Domain\Models\Channel::class);
+	}
+	public function subscriptions() {
+		return $this->hasMany(Subscription::class);
+	}
+	public function subscribedChannels() {
+		return $this->belongsToMany(Channel::class, 'subscriptions');
+	}
+	public function isSubscribedTo(Channel $channel) {
+		return $this->subscriptions()->where('channel_id', $channel->id)->exists();
+	}
+	public function ownsChannel(Channel $channel) {
+		return $this->id == $channel->user_id;
 	}
 	public function getJWTIdentifier() {
 		return $this->getKey();

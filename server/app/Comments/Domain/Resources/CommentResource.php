@@ -16,6 +16,7 @@ class CommentResource extends JsonResource {
 		return [
 			'id' => $this->id,
 			'user' => new UserResource($this->user),
+			'reply_id' => $this->when(!!$this->reply_id, $this->reply_id),
 			$this->mergeWhen($this->replies->count() && !$this->reply_id, [
 				'replies' => CommentResource::collection($this->replies()->latestFirst()->get()),
 			]),
