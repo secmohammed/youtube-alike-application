@@ -16,7 +16,7 @@
                 <form action="#" class="navbar-item">
                     <div class="field">
                         <div class="control">
-                            <input class="input is-medium" @keyup.enter="searchData" type="search" id="channels-search">
+                            <input class="input is-medium" @keyup.enter.prevent="searchData" type="search" id="channels-search">
                         </div>
                     </div>
                 </form>

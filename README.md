@@ -16,11 +16,12 @@ Technologies Used :
 
 The application is still in progress and under-development
 
-It still needs 
-
+It still needs
 - Indexing Videos on the sidebar of single video.
 - Likes & Dislikes For Comments & Replies.
 - Testing
     - Vote
     - Comment
     - Subscription
+    - Resources
+    - Middlewares.
