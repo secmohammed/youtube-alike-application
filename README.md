@@ -9,14 +9,14 @@ Technologies Used :
 - ADR Design Pattern Instead of MVC
 - JWT Auth
 - Aloglia Search
+- Comments, Replies
+- Likes & Dislikes For Videos.
+- Subscription
 
 
 The application is still in progress and under-development
 
 It still needs 
 
-
-- Comments, Replies
-- Subscription
-- Indexing Playlists
-- Likes & Dislikes.
+- Indexing Videos on the sidebar of single video.
+- Likes & Dislikes For Comments & Replies.
