@@ -14,7 +14,7 @@
                     <br>
                     {{ comment.body }}
                     <br>
-                    <small><a>Like</a> · <a @click.prevent="toggleReplyForm(comment.id)" v-if="authenticated">{{ reply_id === comment.id ? 'Cancel' : 'Reply' }}</a> . <a @click.prevent="deleteComment(comment.id)" v-if="user.id == comment.user.id">Delete</a></small>
+                    <small v-if="authenticated"> <a @click.prevent="toggleReplyForm(comment.id)" v-if="authenticated">{{ reply_id === comment.id ? 'Cancel' : 'Reply' }}</a> . <a @click.prevent="deleteComment(comment.id)" v-if="user.id == comment.user.id">Delete</a></small>
                     <CreateReply v-if="authenticated && reply_id == comment.id" :commentId="comment.id" />
 
                 </p>
@@ -32,7 +32,7 @@
                             <br>
                             {{ reply.body }}
                             <br>
-                            <small><a>Like</a> . <a @click.prevent="deleteReply(reply.id)" v-if="user.id == reply.user.id">Delete</a></small>
+                            <small v-if="authenticated"><a @click.prevent="deleteReply(reply.id)" v-if="user.id == reply.user.id">Delete</a></small>
                         </p>
                     </div>
                 </div>

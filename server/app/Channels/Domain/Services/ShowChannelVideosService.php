@@ -7,6 +7,6 @@ use App\App\Domain\Payloads\GenericPayload;
 
 class ShowChannelVideosService implements ServiceInterface {
 	public function handle($channel = null) {
-		return new GenericPayload($channel->videos);
+		return new GenericPayload($channel->videos()->visible()->get());
 	}
 }

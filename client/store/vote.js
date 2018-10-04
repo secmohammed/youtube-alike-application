@@ -35,9 +35,7 @@ export const actions = {
         commit
     }, identifier) {
         return this.$axios.$post(`/videos/${identifier}/votes`).then(response => {
-            // update vote form.
             commit('SET_CURRENT_VOTE_FORM', response.data)
-                // update vote of the video.
             commit('video/SET_VIDEO_VOTES', {
                 uid: identifier,
                 votes: response.data
@@ -45,7 +43,6 @@ export const actions = {
                 root: true
             })
 
-            // update the current vote of the viewed video.
             commit('video/SET_CURRENT_VIDEO_VOTES', response.data, {
                 root: true
             })
@@ -55,18 +52,13 @@ export const actions = {
         commit
     }, identifier) {
         return this.$axios.$delete(`/videos/${identifier}/votes`).then(response => {
-
-            // update vote form.
             commit('SET_CURRENT_VOTE_FORM', response.data)
-                // update vote of the video.
             commit('video/SET_VIDEO_VOTES', {
                 uid: identifier,
                 votes: response.data
             }, {
                 root: true
             })
-
-            // update the current vote of the viewed video.
             commit('video/SET_CURRENT_VIDEO_VOTES', response.data, {
                 root: true
             })

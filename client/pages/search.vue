@@ -14,7 +14,8 @@
                         <div class="content">
                             <p>
                                 <span class="video-title">{{ channel.name }}</span>
-                                <span class="video-views">239 subscribes</span>
+                                <span class="video-views">{{ channel.subscriptions }} subscribers.</span>
+                                <span class="video-views">{{ channel.views }} views</span>
                             </p>
                         </div>
                     </div>

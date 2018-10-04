@@ -213,11 +213,4 @@ export const actions = {
             })
         })
     },
-    setSearchData({
-        commit
-    }, query) {
-        return this.$axios.$get('/search?q=' + query).then((response) => {
-            commit('SET_SEARCH_DATA', response.data)
-        })
-    }
 }

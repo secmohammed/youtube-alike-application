@@ -22,6 +22,8 @@ Route::delete('/videos/{video}/votes', App\Votes\Actions\DeleteVideoVoteAction::
  */
 Route::post('/comments/{video}', App\Comments\Actions\StoreCommentAction::class);
 Route::delete('videos/{video}/comments/{comment}', App\Comments\Actions\DeleteCommentAction::class);
+// Route::post('/comment/{comment}/votes', App\Votes\Actions\StoreVideoVoteAction::class);
+// Route::delete('/comment/{comment}/votes', App\Votes\Actions\DeleteVideoVoteAction::class);
 
 /**
  * Subscription Area.

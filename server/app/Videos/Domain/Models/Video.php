@@ -47,6 +47,9 @@ class Video extends Model {
 	public function isPrivate() {
 		return $this->visibility === 'private';
 	}
+	public function isPublic() {
+		return $this->visibility === 'public';
+	}
 	public function selfOwned($user = null) {
 		if (!$user && !auth()->check()) {
 			return false;
@@ -81,7 +84,12 @@ class Video extends Model {
 		if (!$user && auth()->check()) {
 			$user = auth()->user();
 		}
-		return $this->votes()->RecentForUser($user);
+		return $this->votes->RecentForUser($user);
+	}
+	public function toSearchableArray() {
+		$properities = $this->toArray();
+		$properities['visible'] = $this->isProcessed() && $this->isPublic();
+		return $properities;
 	}
 	public function votesAllowed() {
 		return $this->allow_votes;

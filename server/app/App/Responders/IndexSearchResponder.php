@@ -15,7 +15,7 @@ class IndexSearchResponder extends Responder implements ResponderInterface {
 	}
 	public function respond() {
 		return ChannelResource::collection($this->response->getData())->additional([
-			'videos' => VideoResource::collection($this->videos->search(request('q'))->take(10)->get()),
+			'videos' => VideoResource::collection($this->videos->search(request('q'))->where('visible', true)->take(10)->get()),
 		]);
 	}
 }

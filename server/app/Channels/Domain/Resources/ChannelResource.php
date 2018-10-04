@@ -19,12 +19,13 @@ class ChannelResource extends JsonResource {
 			'id' => $this->id,
 			'slug' => $this->slug,
 			'description' => $this->description,
-			'avatar' => config('codetube.buckets.storage') . '/profile/' . $this->avatar,
+			'avatar' => config('codetube.buckets.storage') . '/profile/' . $this->avatar ?? 'default.png',
 			'user' => new UserResource($this->whenLoaded('user')),
 			'videos' => $this->when($this->conditionallyLoadFilteredVideos(), $this->conditionallyLoadFilteredVideos()),
 			'created_at_human' => $this->created_at->diffForHumans(),
 			'updated_at_human' => $this->updated_at->diffForHumans(),
 			'views' => $this->totalVideoViews(),
+			'subscriptions' => $this->subscriptionCount(),
 		];
 	}
 	protected function when($condition, $value, $default = null) {
